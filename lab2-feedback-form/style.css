@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    color: #222;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #ffffff;
+    border-bottom: 4px solid #0054b2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Поддержка текущей разметки ЛР2 */
+.logo-block {
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-block img {
+    display: block;
+    max-width: 250px;
+    height: auto;
+}
+
+.logo-block span {
+    color: #0054b2;
+    font-weight: 600;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    color: #0054b2;
+    text-align: center;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.form-block {
+    width: 100%;
+    max-width: 650px;
+    background: white;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.form-block h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label,
+.answer-title {
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 1px solid #c8c8c8;
+    border-radius: 8px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    font-weight: normal;
+}
+
+.checkbox-label input {
+    width: auto;
+}
+
+button {
+    margin-top: 25px;
+    padding: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    color: white;
+    background-color: #0054b2;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003f86;
+}
+
+.page-link {
+    display: block;
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    color: white;
+    background-color: #0054b2;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+.page-link:hover {
+    background-color: #003f86;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #1a252f;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+footer p {
+    margin: 0;
+}
