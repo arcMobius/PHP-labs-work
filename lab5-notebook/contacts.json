@@ -1,0 +1,15 @@
+[
+    {
+        "id": 8,
+        "last_name": "Соколова",
+        "first_name": "Ольга",
+        "middle_name": "Викторовна",
+        "gender": "Женский",
+        "birth_date": "2000-05-25",
+        "phone": "+7 900 888-99-00",
+        "address": "Реутов",
+        "email": "sokolova@mail.ru",
+        "comment": "Лучшая подруга",
+        "created_at": 8
+    }
+]
