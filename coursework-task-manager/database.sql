@@ -1,48 +1,73 @@
-CREATE DATABASE IF NOT EXISTS `bd_blog` CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `task_manager`
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
 
-USE `bd_blog`;
+USE `task_manager`;
 
-DROP TABLE IF EXISTS `articles`;
+DROP TABLE IF EXISTS `comments`;
+DROP TABLE IF EXISTS `tasks`;
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `nickname` varchar(128) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `is_confirmed` tinyint(1) NOT NULL DEFAULT '0',
-  `role` enum('admin','user') NOT NULL,
-  `password_hash` varchar(255) NOT NULL,
-  `auth_token` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `nickname` VARCHAR(128) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `password_hash` VARCHAR(255) NOT NULL,
+    `role` ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `nickname_unique` (`nickname`),
+    UNIQUE KEY `email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nickname` (`nickname`),
-  ADD UNIQUE KEY `email` (`email`);
+CREATE TABLE `tasks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `author_id` INT NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `status` ENUM('new', 'in_progress', 'done') NOT NULL DEFAULT 'new',
+    `priority` ENUM('low', 'medium', 'high') NOT NULL DEFAULT 'medium',
+    `deadline` DATE DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `author_id_index` (`author_id`),
+    CONSTRAINT `tasks_author_fk`
+        FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+CREATE TABLE `comments` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `author_id` INT NOT NULL,
+    `task_id` INT NOT NULL,
+    `text` TEXT NOT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `author_id_index` (`author_id`),
+    KEY `task_id_index` (`task_id`),
+    CONSTRAINT `comments_author_fk`
+        FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `comments_task_fk`
+        FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `users` (`id`, `nickname`, `email`, `is_confirmed`, `role`, `password_hash`, `auth_token`, `created_at`) VALUES
-(NULL, 'admin', 'admin@gmail.com', '1', 'admin', 'hash1', 'token1', CURRENT_TIMESTAMP),
-(NULL, 'user', 'user@gmail.com', '1', 'user', 'hash2', 'token2', CURRENT_TIMESTAMP);
+INSERT INTO `users` (`nickname`, `email`, `password_hash`, `role`)
+VALUES
+    ('admin', 'admin@example.com', 'hash1', 'admin'),
+    ('student', 'student@example.com', 'hash2', 'user');
 
-CREATE TABLE `articles` (
-  `id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `text` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `tasks` (`author_id`, `title`, `description`, `status`, `priority`, `deadline`)
+VALUES
+    (1, 'Подготовить пояснительную записку', 'Описать цель проекта, структуру базы данных, маршруты и основные возможности приложения.', 'in_progress', 'high', '2026-06-01'),
+    (1, 'Реализовать комментарии к задачам', 'Добавить таблицу comments, форму добавления комментария и страницу редактирования комментария.', 'new', 'high', '2026-06-03'),
+    (2, 'Проверить работу маршрутизации', 'Убедиться, что страницы списка задач, просмотра задачи и редактирования открываются корректно.', 'new', 'medium', NULL);
 
-ALTER TABLE `articles`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `articles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-INSERT INTO `articles` (`id`, `author_id`, `name`, `text`, `created_at`) VALUES
-(NULL, '1', 'Статья №1', 'Можно взять что-то вроде Lorem Ipsum', CURRENT_TIMESTAMP),
-(NULL, '1', 'Статья №2', 'Можно взять что-то вроде Lorem Ipsum', CURRENT_TIMESTAMP),
-(NULL, '2', 'Статья №3', 'Эта статья написана пользователем user', CURRENT_TIMESTAMP);
+INSERT INTO `comments` (`author_id`, `task_id`, `text`)
+VALUES
+    (1, 1, 'Нужно добавить описание предметной области.'),
+    (2, 1, 'Также стоит приложить скриншоты интерфейса.'),
+    (1, 2, 'Комментарии должны добавляться через POST-запрос.');
