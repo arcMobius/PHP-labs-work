@@ -12,6 +12,10 @@
     <section class="content-block">
         <h2>Список задач курсового проекта</h2>
 
+<p class="task-actions">
+    <a href="/tasks/create">Создать новую задачу</a>
+</p>
+        
         <?php foreach ($tasks as $task): ?>
             <article class="task-card">
                 <h3>

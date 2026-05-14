@@ -4,6 +4,7 @@ namespace MyProject\Models\Tasks;
 
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
+use MyProject\Services\Db;
 
 class Task extends ActiveRecordEntity
 {
@@ -118,6 +119,32 @@ class Task extends ActiveRecordEntity
                 return $this->priority;
         }
     }
+
+public static function create(
+    int $authorId,
+    string $title,
+    string $description,
+    string $status,
+    string $priority,
+    ?string $deadline
+): int {
+    $db = Db::getInstance();
+
+    $db->execute(
+        'INSERT INTO `tasks` (`author_id`, `title`, `description`, `status`, `priority`, `deadline`)
+         VALUES (:authorId, :title, :description, :status, :priority, :deadline);',
+        [
+            ':authorId' => $authorId,
+            ':title' => $title,
+            ':description' => $description,
+            ':status' => $status,
+            ':priority' => $priority,
+            ':deadline' => $deadline,
+        ]
+    );
+
+    return (int) $db->getLastInsertId();
+}
 
     protected static function getTableName(): string
     {

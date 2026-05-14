@@ -4,6 +4,7 @@ namespace MyProject\Controllers;
 
 use MyProject\Models\Tasks\Task;
 use MyProject\View\View;
+use MyProject\Models\Users\User;
 
 class TaskController
 {
@@ -14,7 +15,51 @@ class TaskController
         $this->view = new View(__DIR__ . '/../../../templates');
     }
 
-    public function edit(int $taskId): void
+public function create(): void
+{
+    $message = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $authorId = (int) ($_POST['author_id'] ?? 0);
+        $title = trim($_POST['title'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $status = $_POST['status'] ?? 'new';
+        $priority = $_POST['priority'] ?? 'medium';
+        $deadline = trim($_POST['deadline'] ?? '');
+
+        $allowedStatuses = ['new', 'in_progress', 'done'];
+        $allowedPriorities = ['low', 'medium', 'high'];
+
+        if (
+            $title !== ''
+            && $description !== ''
+            && User::getById($authorId) !== null
+            && in_array($status, $allowedStatuses, true)
+            && in_array($priority, $allowedPriorities, true)
+        ) {
+            $taskId = Task::create(
+                $authorId,
+                $title,
+                $description,
+                $status,
+                $priority,
+                $deadline !== '' ? $deadline : null
+            );
+
+            header('Location: /tasks/' . $taskId);
+            exit;
+        }
+
+        $message = 'Ошибка: заполните название, описание и выберите корректные данные';
+    }
+
+    $this->view->renderHtml('tasks/create.php', [
+        'users' => User::findAll(),
+        'message' => $message,
+    ]);
+}
+
+        public function edit(int $taskId): void
     {
         $task = Task::getById($taskId);
 
