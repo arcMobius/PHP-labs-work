@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Query</title>
-    <link rel="stylesheet" href="/styles/style.css">
-</head>
-<body>
+<header>
+    <div class="logo-block">
+        <a href="/">Task Manager</a>
+    </div>
 
-<table class="layout">
-    <tr>
-        <td colspan="2" class="header">
-            Мой блог
-        </td>
-    </tr>
-    <tr>
-        <td>
+    <h1>Task Manager</h1>
+
+    <nav class="header-menu">
+        <a href="/">Главная</a>
+    </nav>
+</header>

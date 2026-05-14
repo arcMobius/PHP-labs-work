@@ -2,12 +2,12 @@
 
 namespace MyProject\Controllers;
 
-use MyProject\Models\Articles\Article;
+use MyProject\Models\Tasks\Task;
 use MyProject\View\View;
 
 class MainController
 {
-    private View $view;
+    private $view;
 
     public function __construct()
     {
@@ -16,10 +16,10 @@ class MainController
 
     public function main(): void
     {
-        $articles = Article::findAll();
+        $tasks = Task::findAll();
 
         $this->view->renderHtml('main/main.php', [
-            'articles' => $articles,
+            'tasks' => $tasks,
         ]);
     }
 }

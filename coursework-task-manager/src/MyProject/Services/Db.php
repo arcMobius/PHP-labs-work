@@ -4,9 +4,8 @@ namespace MyProject\Services;
 
 class Db
 {
-    private static ?self $instance = null;
-
-    private \PDO $pdo;
+    private static $instance;
+    private $pdo;
 
     private function __construct()
     {
@@ -41,5 +40,16 @@ class Db
         }
 
         return $statement->fetchAll(\PDO::FETCH_CLASS, $className);
+    }
+
+    public function execute(string $sql, array $params = []): bool
+    {
+        $statement = $this->pdo->prepare($sql);
+        return $statement->execute($params);
+    }
+
+    public function getLastInsertId(): string
+    {
+        return $this->pdo->lastInsertId();
     }
 }

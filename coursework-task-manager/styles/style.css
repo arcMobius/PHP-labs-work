@@ -1,50 +1,202 @@
-.layout {
-    width: 100%;
-    max-width: 1024px;
-    margin: auto;
-    background-color: white;
-    border-collapse: collapse;
+* {
+    box-sizing: border-box;
 }
 
-.layout tr td {
-    padding: 20px;
-    vertical-align: top;
-    border: solid 1px gray;
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f2f5;
+    color: #222;
 }
 
-.header {
-    font-size: 30px;
+header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #ffffff;
+    border-bottom: 4px solid #0054b2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.footer {
+.logo-block {
+    justify-self: start;
+    font-weight: 600;
+}
+
+.logo-block a {
+    color: #0054b2;
+    text-decoration: none;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    color: #0054b2;
     text-align: center;
 }
 
-.sidebarHeader {
-    font-size: 20px;
+.header-menu {
+    justify-self: end;
 }
 
-.sidebar ul {
-    padding-left: 20px;
+.header-menu a {
+    color: #0054b2;
+    font-weight: 600;
+    text-decoration: none;
 }
 
-a,
-a:visited {
-    color: darkgreen;
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+.content-block,
+.form-block {
+    width: 100%;
+    max-width: 850px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.content-block h2,
+.form-block h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.task-card {
+    padding: 20px 0;
+    border-bottom: 1px solid #dddddd;
+}
+
+.task-card:last-child {
+    border-bottom: none;
+}
+
+.task-card h3 {
+    margin-top: 0;
+}
+
+.task-card a,
+.task-actions a,
+.back-link,
+.page-link {
+    color: #0054b2;
+    font-weight: 600;
+}
+
+.task-description {
+    line-height: 1.5;
+}
+
+.task-meta {
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+.task-actions {
+    margin-top: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
 }
 
 input,
+select,
 textarea {
     width: 100%;
-    max-width: 700px;
-    padding: 8px;
-    font-family: inherit;
+    padding: 11px;
     font-size: 16px;
+    font-family: inherit;
+    border: 1px solid #c8c8c8;
+    border-radius: 8px;
+}
+
+textarea {
+    resize: vertical;
 }
 
 button {
-    padding: 8px 14px;
-    font-family: inherit;
+    margin-top: 25px;
+    padding: 12px;
     font-size: 16px;
+    font-family: inherit;
+    color: white;
+    background-color: #0054b2;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #003f86;
+}
+
+.error-message {
+    padding: 12px;
+    background-color: #ffe8e8;
+    border: 1px solid #d66;
+    border-radius: 8px;
+    color: #900;
+}
+
+footer {
+    background-color: #1a252f;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+footer p {
+    margin: 0;
+}
+.comments-block {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #dddddd;
+}
+
+.comments-block h3 {
+    margin-top: 25px;
+    color: #333;
+}
+
+.comment {
+    margin-bottom: 18px;
+    padding: 18px;
+    background-color: #f7f9fc;
+    border: 1px solid #dde5f0;
+    border-radius: 12px;
+}
+
+.comment-meta {
+    margin-top: 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.comment a {
+    color: #0054b2;
+    font-weight: 600;
 }

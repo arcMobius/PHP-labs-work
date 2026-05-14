@@ -3,7 +3,7 @@
 return [
     'db' => [
         'host' => 'localhost',
-        'dbname' => 'bd_blog',
+        'dbname' => 'task_manager',
         'user' => 'root',
         'password' => '',
     ],
